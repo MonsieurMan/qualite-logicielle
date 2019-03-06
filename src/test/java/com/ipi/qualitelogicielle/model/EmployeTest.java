@@ -54,4 +54,18 @@ class EmployeTest {
         // Then
         assertEquals(expectedPrime, prime);
     }
+
+    @ParameterizedTest
+    @CsvSource({
+            "M12345, true",
+            "T12345, false"
+    })
+    void isManagerTest(String matricule, boolean expected) {
+        // Given
+        val employe = Employe.builder().matricule(matricule).build();
+        // When
+        val isManager = employe.isManager();
+        // Then
+        assertEquals(expected, isManager);
+    }
 }

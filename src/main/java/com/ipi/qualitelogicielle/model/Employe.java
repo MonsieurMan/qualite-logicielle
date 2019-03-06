@@ -79,6 +79,8 @@ public class Employe {
             case SATURDAY:
                 var = var + 1;
                 break;
+            default:
+                break;
         }
         int monInt = (int) Entreprise.joursFeries(d).stream()
                 .filter(localDate -> localDate.getDayOfWeek().getValue() <= DayOfWeek.FRIDAY.getValue())
@@ -118,7 +120,7 @@ public class Employe {
         return 1D;
     }
 
-    private boolean isManager() {
+    public boolean isManager() {
         return this.matricule != null
                 && matricule.startsWith("M");
     }
