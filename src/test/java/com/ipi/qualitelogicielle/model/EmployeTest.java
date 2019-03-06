@@ -36,7 +36,8 @@ class EmployeTest {
 
     @ParameterizedTest
     @CsvSource({
-            "T45632, 1, 0, 1.0, 400"
+            "T45632, 1, 0, 1.0, 400",
+            "M12345, 1, 0, 1, 1800"
     })
     void getPrimeAnnuelle(String matricule, int anneeAnciennete, int performance, Double tempsPartiel, Double expectedPrime) {
         val dateEmbauche = LocalDate.of(2000, 1, 1);
