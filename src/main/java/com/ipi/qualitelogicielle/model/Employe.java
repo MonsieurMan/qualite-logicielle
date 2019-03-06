@@ -1,6 +1,7 @@
 package com.ipi.qualitelogicielle.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Employe {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -44,19 +46,19 @@ public class Employe {
         this.tempsPartiel = tempsPartiel;
     }
 
-    private Integer getNombreAnneeAnciennete() {
-        return LocalDate.now().getYear() - dateEmbauche.getYear();
+    public int getNombreAnneeAnciennete(LocalDate now) {
+        return now.getYear() - dateEmbauche.getYear();
     }
 
-    public Integer getNbConges() {
-        return Entreprise.NB_CONGES_BASE + this.getNombreAnneeAnciennete();
+    public int getNbConges(LocalDate now) {
+        return Entreprise.NB_CONGES_BASE + this.getNombreAnneeAnciennete(now);
     }
 
-    public Integer getNbRtt() {
+    public int getNbRtt() {
         return getNbRtt(LocalDate.now());
     }
 
-    private Integer getNbRtt(LocalDate d) {
+    private int getNbRtt(LocalDate d) {
         int i1 = d.isLeapYear() ? 365 : 366;
         int var = 104;
         switch (LocalDate.of(d.getYear(), 1, 1).getDayOfWeek()) {
@@ -91,7 +93,7 @@ public class Employe {
      */
     public Double getPrimeAnnuelle() {
         //Calcule de la prime d'ancienneté
-        Double primeAnciennete = Entreprise.PRIME_ANCIENNETE * this.getNombreAnneeAnciennete();
+        Double primeAnciennete = Entreprise.PRIME_ANCIENNETE * this.getNombreAnneeAnciennete(LocalDate.now());
         Double prime;
         //Prime du manager (matricule commençant par M) : Prime annuelle de base multipliée par l'indice prime manager
         //plus la prime d'anciennté.
