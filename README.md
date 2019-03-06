@@ -1,5 +1,6 @@
 ![420 Blaze it](https://img.shields.io/badge/420-blaze%20it-57D53B.svg)
 ![Build status](https://travis-ci.org/MonsieurMan/qualite-logicielle.svg?branch=master)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=com.ipi%3Aqualite-logicielle&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.ipi%3Aqualite-logicielle)
 
 # TP sur la qualité logicielle
 
