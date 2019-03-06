@@ -1,19 +1,12 @@
 package com.ipi.qualitelogicielle.model;
 
 import lombok.val;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.*;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.stream.Stream;
 
-import static java.util.Arrays.asList;
-import static org.junit.Assert.*;
-import static org.junit.jupiter.params.provider.Arguments.arguments;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class EmployeTest {
     @ParameterizedTest
