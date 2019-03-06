@@ -5,12 +5,12 @@ import java.util.*;
 
 public final class Entreprise {
     public static final Double SALAIRE_BASE = 1521.22;
-    public static final Integer NB_CONGES_BASE = 25;
-    public static final Double INDICE_PRIME_BASE = 0.3;
-    public static final Double INDICE_PRIME_MANAGER = 1.7;
-    public static final Double PRIME_ANCIENNETE = 100d;
+    static final Integer NB_CONGES_BASE = 25;
+    static final Double INDICE_PRIME_BASE = 0.3;
+    static final Double INDICE_PRIME_MANAGER = 1.7;
+    static final Double PRIME_ANCIENNETE = 100d;
     public static final Integer PERFORMANCE_BASE = 1;
-    public static final Integer NB_JOURS_MAX_FORFAIT = 218;
+    static final Integer NB_JOURS_MAX_FORFAIT = 218;
     private static final double PRIME_BASE = 1000d;
 
     public static final Map<NiveauEtude, Double> COEFF_SALAIRE_ETUDES = new EnumMap<>(NiveauEtude.class);
@@ -56,11 +56,11 @@ public final class Entreprise {
     public static final String MATRICULE_INITIAL = "00000";
 
 
-    public static Double primeAnnuelleBase() {
+    static Double primeAnnuelleBase() {
         return PRIME_BASE;
     }
 
-    public static List<LocalDate> joursFeries(LocalDate now){
+    static List<LocalDate> joursFeries(LocalDate now){
 
         return Arrays.asList(
                 // 1er janvier	Jour de l’an
