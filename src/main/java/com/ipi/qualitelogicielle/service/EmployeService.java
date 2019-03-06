@@ -30,10 +30,8 @@ class EmployeService {
      * @throws EntityExistsException Si le matricule correspond à un employé existant
      */
     public void embaucheEmploye(String nom, String prenom, Poste poste, NiveauEtude niveauEtude, Double tempsPartiel) throws EmployeException {
-
         //Récupération du type d'employé à partir du poste
         String typeEmploye = poste.name().substring(0, 1);
-
         //Récupération du dernier matricule...
         String lastMatricule = employeRepository.findLastMatricule();
         if (lastMatricule == null) {
@@ -44,6 +42,7 @@ class EmployeService {
         if (numeroMatricule >= 100000) {
             throw new EmployeException("Limite des 100000 matricules atteinte !");
         }
+
         //On complète le numéro avec des 0 à gauche
         String matricule = "00000" + numeroMatricule;
         matricule = typeEmploye + matricule.substring(matricule.length() - 5);

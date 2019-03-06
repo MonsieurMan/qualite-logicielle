@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class ListUtils {
+    private ListUtils() {
+
+    }
     /**
      * Create a list containing given parameters
      *

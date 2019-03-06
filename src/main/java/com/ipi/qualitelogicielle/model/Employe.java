@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -137,7 +136,7 @@ public class Employe {
 
     // Augmenter salaire
     public void augmenterSalaire(double pourcentage) {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
         // TODO: implement
     }
 }
