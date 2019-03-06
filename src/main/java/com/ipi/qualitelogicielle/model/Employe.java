@@ -1,4 +1,4 @@
-package com.ipiecoles.java.java350.model;
+package com.ipi.qualitelogicielle.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

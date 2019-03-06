@@ -1,11 +1,9 @@
-package com.ipiecoles.java.java350.repository;
+package com.ipi.qualitelogicielle.repository;
 
-import com.ipiecoles.java.java350.model.Employe;
+import com.ipi.qualitelogicielle.model.Employe;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public interface EmployeRepository extends JpaRepository<Employe, Long> {

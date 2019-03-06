@@ -1,11 +1,11 @@
-package com.ipiecoles.java.java350.service;
+package com.ipi.qualitelogicielle.service;
 
-import com.ipiecoles.java.java350.exception.EmployeException;
-import com.ipiecoles.java.java350.model.Employe;
-import com.ipiecoles.java.java350.model.Entreprise;
-import com.ipiecoles.java.java350.model.NiveauEtude;
-import com.ipiecoles.java.java350.model.Poste;
-import com.ipiecoles.java.java350.repository.EmployeRepository;
+import com.ipi.qualitelogicielle.exception.EmployeException;
+import com.ipi.qualitelogicielle.model.Employe;
+import com.ipi.qualitelogicielle.model.Entreprise;
+import com.ipi.qualitelogicielle.model.NiveauEtude;
+import com.ipi.qualitelogicielle.model.Poste;
+import com.ipi.qualitelogicielle.repository.EmployeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
