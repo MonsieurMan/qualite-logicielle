@@ -1,46 +1,57 @@
 package com.ipi.qualitelogicielle.model;
 
 import lombok.val;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.stream.Stream;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.*;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-@RunWith(Parameterized.class)
-public class EmployeTest {
-    @Parameterized.Parameter(value = 0)
-    public LocalDate dateEmbauche;
-
-    @Parameterized.Parameter(value = 1)
-    public LocalDate dateActuelle;
-
-    @Parameterized.Parameter(value = 2)
-    public int expectedYear;
-
-    @Parameterized.Parameters(name = "Embauche en {0} le {1} le nombre d'annee est : {2}")
-    public static Collection<Object[]> data() {
-        return asList(new Object[][]{
-                {LocalDate.of(2000, 1, 1), LocalDate.of(2001, 1, 1), 1},
-                {LocalDate.of(2000, 1, 1), LocalDate.of(2000, 1, 1), 0},
-                {LocalDate.of(2000, 1, 1), LocalDate.of(1999, 1, 1), 0},
-                {null, LocalDate.of(2001, 1, 1), 0},
-        });
-    }
-
-    @Test
-    public void getNombreAnneeAnciennete() {
+class EmployeTest {
+    @ParameterizedTest
+    @CsvSource({
+            "2000-01-01, 2000-01-01, 0",
+            "2000-01-01, 2001-01-01, 1",
+            ",2000-01-01, 0",
+            "2001-01-01, 2000-01-01, 0"
+    })
+    void getNombreAnneeAnciennete(LocalDate dateEmbauche, LocalDate now, int expectedYear) {
         // Given employe embauché en 2000
         val newEmploye = Employe.builder()
-                .dateEmbauche(this.dateEmbauche)
+                .dateEmbauche(dateEmbauche)
                 .build();
         // When getting nombre annee ancienneté 1 year after
-        val anneeAnciennete = newEmploye.getNombreAnneeAnciennete(this.dateActuelle);
+        val anneeAnciennete = newEmploye.getNombreAnneeAnciennete(now);
         // Then it should return 1
-        assertEquals(anneeAnciennete, this.expectedYear);
+        assertEquals(anneeAnciennete, expectedYear);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "T45632, 1, 0, 1.0, 400"
+    })
+    void getPrimeAnnuelle(String matricule, int anneeAnciennete, int performance, Double tempsPartiel, Double expectedPrime) {
+        val dateEmbauche = LocalDate.of(2000, 1, 1);
+        val dateActuelle = dateEmbauche.plusYears(anneeAnciennete);
+        // Given
+        val employe = Employe.builder()
+                .matricule(matricule)
+                .dateEmbauche(dateEmbauche)
+                .salaire(1D)
+                .performance(performance)
+                .tempsPartiel(tempsPartiel)
+                .build();
+        // When
+        Double prime = employe.getPrimeAnnuelle(dateActuelle);
+        // Then
+        assertEquals(expectedPrime, prime);
     }
 }

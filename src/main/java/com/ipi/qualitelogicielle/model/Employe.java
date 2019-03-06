@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -87,38 +88,54 @@ public class Employe {
 
     /**
      * Calcul de la prime annuelle selon la règle :
-     * Pour les managers : Prime annuelle de base bonnifiée par l'indice prime manager
-     * Pour les autres employés, la prime de base plus éventuellement la prime de performance calculée si l'employé
+     * - Pour les managers : Prime annuelle de base bonnifiée par l'indice prime manager
+     * - Pour les autres employés, la prime de base plus éventuellement la prime de performance calculée si l'employé
      * n'a pas la performance de base, en multipliant la prime de base par un l'indice de performance
      * (égal à la performance à laquelle on ajoute l'indice de prime de base)
      * <p>
-     * Pour tous les employés, une prime supplémentaire d'ancienneté est ajoutée en multipliant le nombre d'année
+     * - Pour tous les employés, une prime supplémentaire d'ancienneté est ajoutée en multipliant le nombre d'année
      * d'ancienneté avec la prime d'ancienneté. La prime est calculée au pro rata du temps de travail de l'employé
      *
      * @return la prime annuelle de l'employé en Euros et cents
      */
-    public Double getPrimeAnnuelle() {
-        //Calcule de la prime d'ancienneté
-        Double primeAnciennete = Entreprise.PRIME_ANCIENNETE * this.getNombreAnneeAnciennete(LocalDate.now());
-        Double prime;
-        //Prime du manager (matricule commençant par M) : Prime annuelle de base multipliée par l'indice prime manager
-        //plus la prime d'anciennté.
-        if (matricule != null && matricule.startsWith("M")) {
-            prime = Entreprise.primeAnnuelleBase() * Entreprise.INDICE_PRIME_MANAGER + primeAnciennete;
+    public Double getPrimeAnnuelle(LocalDate now) {
+        double prime = Entreprise.primeAnnuelleBase();
+
+        prime *= getPrimeMultiplicator();
+        prime += getPrimeAnciennete(now);
+        prime *= this.tempsPartiel;
+
+        return prime;
+    }
+
+    private Double getPrimeMultiplicator() {
+        if (this.isManager()) {
+            return Entreprise.INDICE_PRIME_MANAGER;
         }
-        //Pour les autres employés en performance de base, uniquement la prime annuelle plus la prime d'ancienneté.
-        else if (this.performance == null || Entreprise.PERFORMANCE_BASE.equals(this.performance)) {
-            prime = Entreprise.primeAnnuelleBase() + primeAnciennete;
+        else if (this.isMorePerformant()) {
+            return this.performance + Entreprise.INDICE_PRIME_BASE;
         }
-        //Pour les employés plus performance, on bonnifie la prime de base en multipliant par la performance de l'employé
-        // et l'indice de prime de base.
-        else {
-            prime = Entreprise.primeAnnuelleBase() * (this.performance + Entreprise.INDICE_PRIME_BASE) + primeAnciennete;
-        }
-        //Au pro rata du temps partiel.
-        return prime * this.tempsPartiel;
+        return 1D;
+    }
+
+    private boolean isManager() {
+        return this.matricule != null
+                && matricule.startsWith("M");
+    }
+
+    private double getPrimeAnciennete(LocalDate now) {
+        return Entreprise.PRIME_ANCIENNETE * this.getNombreAnneeAnciennete(now);
+    }
+
+    private boolean isMorePerformant() {
+        return !(this.performance == null
+                || Entreprise.PERFORMANCE_BASE.equals(this.performance)
+        );
     }
 
     // Augmenter salaire
-    // TODO: public void augmenterSalaire(double pourcentage){}
+    public void augmenterSalaire(double pourcentage) {
+        throw new NotImplementedException();
+        // TODO: implement
+    }
 }
