@@ -1,16 +1,17 @@
 package com.ipi.qualitelogicielle.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
@@ -68,18 +69,25 @@ public class Employe {
     }
 
     private int getNbRtt(LocalDate d) {
-        int i1 = d.isLeapYear() ? 365 : 366;
+        int i1 = d.isLeapYear()
+                ? 365
+                : 366;
         int var = 104;
         switch (LocalDate.of(d.getYear(), 1, 1).getDayOfWeek()) {
             case THURSDAY:
-                if (d.isLeapYear()) var = var + 1;
+                if (d.isLeapYear()) {
+                    var += 1;
+                }
                 break;
             case FRIDAY:
-                if (d.isLeapYear()) var = var + 2;
-                else var = var + 1;
+                if (d.isLeapYear()) {
+                    var += 2;
+                } else {
+                    var += 1;
+                }
                 break;
             case SATURDAY:
-                var = var + 1;
+                var += 1;
                 break;
             default:
                 break;
@@ -116,10 +124,10 @@ public class Employe {
         if (this.isManager()) {
             return Entreprise.INDICE_PRIME_MANAGER;
         }
-        else if (this.isMorePerformant()) {
+        if (this.isMorePerformant()) {
             return this.performance + Entreprise.INDICE_PRIME_BASE;
         }
-        return 1D;
+        return 1.0D;
     }
 
     public boolean isManager() {

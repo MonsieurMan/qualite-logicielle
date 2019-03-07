@@ -1,0 +1,23 @@
+stages:
+  - build
+  - test
+#  - report
+
+image: maven:alpine
+
+job build:
+  stage: build
+  script:
+  - mvn -Dmaven.test.skip=true package
+
+job test:
+  stage: test
+  script:
+  - mvn test
+
+#job sonarqube:
+#  stage: report
+
+#job owasp-check:
+#  script:
+#    - mvn check

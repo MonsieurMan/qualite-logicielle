@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static com.ipi.qualitelogicielle.utils.ListUtils.of;
+import static com.ipi.qualitelogicielle.utils.ListUtils.from;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
@@ -37,8 +37,8 @@ class EmployeRepositoryTest {
     static Stream<Arguments> matriculeTestCases() {
         return Stream.of(
                 arguments(Collections.EMPTY_LIST, null),
-                arguments(of("M00001"), "00001"),
-                arguments(of("M00001", "T00003", "T00002"), "00003")
+                arguments(from("M00001"), "00001"),
+                arguments(from("M00001", "T00003", "T00002"), "00003")
         );
     }
 }

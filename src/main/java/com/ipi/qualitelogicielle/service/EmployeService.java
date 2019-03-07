@@ -15,6 +15,7 @@ import java.time.LocalDate;
 @Service
 class EmployeService {
 
+    public static final int MAX_MATRICULE_COUNT = 100000;
     @Autowired
     private EmployeRepository employeRepository;
 
@@ -39,7 +40,7 @@ class EmployeService {
         }
         //... et incrémentation
         int numeroMatricule = Integer.parseInt(lastMatricule) + 1;
-        if (numeroMatricule >= 100000) {
+        if (numeroMatricule >= MAX_MATRICULE_COUNT) {
             throw new EmployeException("Limite des 100000 matricules atteinte !");
         }
 
@@ -55,9 +56,9 @@ class EmployeService {
         //Calcul du salaire
         Double salaire = Entreprise.COEFF_SALAIRE_ETUDES.get(niveauEtude) * Entreprise.SALAIRE_BASE;
         if (tempsPartiel != null) {
-            salaire = salaire * tempsPartiel;
+            salaire *= tempsPartiel;
         }
-        salaire = Math.round(salaire * 100d) / 100d;
+        salaire = Math.round(salaire * 100.0d) / 100.0d;
 
         //Création et sauvegarde en BDD de l'employé.
         Employe employe = new Employe(nom, prenom, matricule, LocalDate.now(), salaire, Entreprise.PERFORMANCE_BASE, tempsPartiel);
