@@ -29,7 +29,7 @@ class EmployeService {
      * @throws EmployeException      Si on arrive au bout des matricules possibles
      * @throws EntityExistsException Si le matricule correspond à un employé existant
      */
-    public void embaucheEmploye(String nom, String prenom, Poste poste, NiveauEtude niveauEtude, Double tempsPartiel) throws EmployeException {
+    void embaucheEmploye(String nom, String prenom, Poste poste, NiveauEtude niveauEtude, Double tempsPartiel) throws EmployeException {
         //Récupération du type d'employé à partir du poste
         String typeEmploye = poste.name().substring(0, 1);
         //Récupération du dernier matricule...
@@ -63,7 +63,6 @@ class EmployeService {
         Employe employe = new Employe(nom, prenom, matricule, LocalDate.now(), salaire, Entreprise.PERFORMANCE_BASE, tempsPartiel);
 
         employeRepository.save(employe);
-
     }
 
 

@@ -30,10 +30,13 @@ public class Employe {
 
     private LocalDate dateEmbauche;
 
+    @Builder.Default
     private Double salaire = Entreprise.SALAIRE_BASE;
 
+    @Builder.Default
     private Integer performance = Entreprise.PERFORMANCE_BASE;
 
+    @Builder.Default
     private Double tempsPartiel = 1.0;
 
     public Employe(String nom, String prenom, String matricule, LocalDate dateEmbauche, Double salaire, Integer performance, Double tempsPartiel) {
@@ -137,6 +140,5 @@ public class Employe {
     // Augmenter salaire
     public void augmenterSalaire(double pourcentage) {
         throw new UnsupportedOperationException();
-        // TODO: implement
     }
 }
